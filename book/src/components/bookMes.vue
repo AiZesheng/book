@@ -69,7 +69,7 @@
                   let isQuit = confirm("添加购物车成功,是否跳到购物车页面?");
                   if (isQuit) {
                     // 跳到购物车页面
-                    this.$router.push("/shoppingcar");
+                    this.$router.push("/shoppingcar"); 
                   }
                 } else {
                   alert(res.data);
@@ -79,7 +79,7 @@
               let isQuit = confirm("添加购物车成功,是否跳到购物车页面?");
               if (isQuit) {
                 // 跳到购物车页面
-                this.$router.push("/shoppingcar");
+                this.$router.push({ name: 'shoppingcar', params: { url: "http://localhost/book_php/user/get_shoppingcar" }});
               }
             }
           });
@@ -90,8 +90,10 @@
       },
       buy(){
         if (this.$store.state.loginUser) {
-          this.$router.push("/shoppingcar");
-        } else {
+          let bookId = this.$route.path.charAt(this.$route.path.length - 1);  //通过url 接到book_id
+          // 跳到立即购买页面
+          this.$router.push({ name: 'shoppingcar', params: { url: "http://localhost/book_php/user/get_by_bookid_userid?book_id="+bookId }});
+        } else {  // 没人登录就跳到登录页面
           alert("您还没有登录");
           this.$router.push("/login");
         }

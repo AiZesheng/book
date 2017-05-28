@@ -46,8 +46,9 @@
       };
     },
     mounted(){
+      alert(this.$route.params.url);
       let userId = this.$store.state.loginUser.user_id;
-      this.$http.jsonp('http://localhost/book_php/user/get_shoppingcar', {
+      this.$http.jsonp(this.$route.params.url, {
         params: {
           user_id: userId
         }
@@ -55,6 +56,7 @@
         jsonp: "callback"
       }).then((res) => {
         if(res.data != 0){
+          console.log(res.data);
           this.books = res.data;
         }else{
           $('#shopping .content').html();

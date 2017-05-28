@@ -35,6 +35,11 @@ class User_model extends CI_Model {
 		$rs = $this->db->query($sql);
 		return $rs->row();
 	}
+	public function get_by_bookid_userid($user_id, $book_id){
+		$sql = "select * from t_shoppingcar,t_book where t_book.book_id=t_shoppingcar.book_id and user_id='$user_id' and t_shoppingcar.book_id='$book_id'";
+		$rs = $this->db->query($sql);
+		return $rs->result();
+	}
 	public function get_by_booktype($book_type){
 		$sql = "select * from t_book where book_type='$book_type'";
 		$rs = $this->db->query($sql);

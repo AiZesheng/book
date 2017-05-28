@@ -36,8 +36,8 @@ let router = new Router({
       component: BookMes
     },
     {
-      name: 'ShoppingCar',
-      path: "/shoppingcar",
+      name: 'shoppingcar',
+      path: "/shoppingcar/:url",
       component: ShoppingCar
     },
     {
