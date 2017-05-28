@@ -19,8 +19,12 @@
   </div>
 </template>
 <script>
+  import {mapState, mapMutations} from "vuex";
   export default{
     props: ['books'],
+    computed: mapState([
+      "total"
+    ]),
     data(){
       return {
         bookNum: 1,
@@ -29,13 +33,19 @@
       };
     },
     methods: {
+      ...mapMutations([
+        "addPrice",
+        "supPrice",
+        "resetPrice"
+      ]),
       sup(){
         if(this.bookNum > 1){
           this.bookNum--;
           this.price = this.bookNum * this.books.book_price;
           this.price = this.price.toFixed(2);
           if(this.isChecked){
-            console.log(this.price);
+            let p = parseFloat(this.books.book_price);
+            this.supPrice(p);
           }
         }
       },
@@ -44,14 +54,31 @@
         this.price = this.bookNum * this.books.book_price;
         this.price = this.price.toFixed(2);
         if(this.isChecked){
-          console.log(this.price);
+          let p = parseFloat(this.books.book_price);
+          this.addPrice(p);
         }
       },
       checked(){
         if(this.isChecked){
-          console.log(this.price);
+          let p = parseFloat(this.price);
+          this.addPrice(p);
+        }else{
+          let p = parseFloat(this.price);
+          this.supPrice(p);
         }
       }
+    },
+    mounted(){
+      this.$nextTick(function () {
+        this.$on('checked', function () {
+          this.isChecked = true;
+          let p = parseFloat(this.price);
+          this.addPrice(p);
+        });
+        this.$on('noChecked', function () {
+          this.isChecked = false;
+        });
+      })
     }
   }
 </script>

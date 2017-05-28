@@ -1,10 +1,10 @@
 <template>
   <div id="shopping">
     <div class="wrapper">
-      <div class="nav">全部商品(0)</div>
+      <div class="nav">全部商品({{bookNum}})</div>
       <div class="hr"></div>
       <div class="key">
-        <input type="checkbox" class="checkbox" id="all">
+        <input type="checkbox" class="checkbox" id="all" v-model="all" @click="isAll">
         <a href="javascript:;" style="color: #666;"><label for="all" class="all">全选</label></a>
         <span>商品信息</span>
         <ul>
@@ -20,7 +20,7 @@
           <div>满88元,享部分地区包邮</div>
         </div>
         <div class="content-list" v-for="x in books">
-          <v-operate :books='x'></v-operate>
+          <v-operate :books='x' ref="child"></v-operate>
         </div>
         <div class="content-bottom">
           <div>再买44.60元，“满68.00元享部分地区包邮”</div>
@@ -29,7 +29,7 @@
       <div class="pay">
         <div style="float: right;">
           <span>合计&nbsp;&nbsp;(不含运费)&nbsp;&nbsp;:&nbsp;&nbsp;</span>
-          <span class="total">{{totalPrice}}</span>
+          <span class="total">{{this.$store.state.total | toFixed}}</span>
           <div id="pay">结&nbsp;算</div>
         </div>
       </div>
@@ -42,11 +42,16 @@
     data(){
       return {
         books: "",
-        totalPrice: "0.00"
+        all: false,
+        bookNum: 0
       };
     },
+    filters: {
+      toFixed: function (value) {  
+        return value.toFixed(2);
+      }
+    },
     mounted(){
-      alert(this.$route.params.url);
       let userId = this.$store.state.loginUser.user_id;
       this.$http.jsonp(this.$route.params.url, {
         params: {
@@ -56,12 +61,28 @@
         jsonp: "callback"
       }).then((res) => {
         if(res.data != 0){
-          console.log(res.data);
           this.books = res.data;
+          this.bookNum = res.data.length;
         }else{
           $('#shopping .content').html();
         }
       });
+    },
+    methods: {
+      isAll(){
+        let child = this.$refs.child;
+        if(this.all){ // 如果被全选
+          this.$store.state.total = 0;
+          for(let i=0; i<child.length; i++){
+            child[i].$emit("checked");
+          }
+        }else{  //全不选
+          for(let i=0; i<child.length; i++){
+            child[i].$emit("noChecked");
+          }
+          this.$store.state.total = 0;
+        }
+      }
     },
     components: {
       "v-operate": Operate

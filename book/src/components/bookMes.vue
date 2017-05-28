@@ -18,10 +18,11 @@
           <div style="border: none;">送购物积分 <span class="val">23</span></div>
         </div>
         <div class="row">
-          <span class="key" style="float: left;line-height: 30px;">数量</span>
-          <div class="left"><i class="fa fa-angle-left"></i></div>
+          <span class="key" style="float: left;line-height: 30px;">分类</span>
+          <!-- <div class="left"><i class="fa fa-angle-left"></i></div>
           <input type="text" class="num" value="0">
-          <div class="right"><i class="fa fa-angle-right"></i></div>
+          <div class="right"><i class="fa fa-angle-right"></i></div> -->
+          <span class="book-type">{{book.book_type}}</span>
           <span class="stock">库存{{book.book_stock}}</span>
         </div>
         <div class="buy" @click="buy">立即购买</div>
@@ -69,13 +70,13 @@
                   let isQuit = confirm("添加购物车成功,是否跳到购物车页面?");
                   if (isQuit) {
                     // 跳到购物车页面
-                    this.$router.push("/shoppingcar"); 
+                    this.$router.push({ name: 'shoppingcar', params: { url: "http://localhost/book_php/user/get_shoppingcar" }});
                   }
                 } else {
                   alert(res.data);
                 }
               });
-            }else{
+            }else{  // 购物车里有这本书就直接跳购物车页面
               let isQuit = confirm("添加购物车成功,是否跳到购物车页面?");
               if (isQuit) {
                 // 跳到购物车页面
@@ -216,10 +217,13 @@
     font-size: 14px;
     color: #888;
     line-height: 30px;
+    float: left;
+    margin-left: 40px;
   }
 
   #bookMes .row {
     margin-top: 30px;
+    overflow: hidden;
   }
 
   #bookMes .buy, #bookMes .shopping-car {
@@ -249,5 +253,13 @@
 
   #bookMes .serve span {
     margin-right: 40px;
+  }
+
+  #bookMes .book-type{
+    float: left;
+    color: #c40000;
+    font-size: 13px;
+    line-height: 30px;
+    font-weight: bold;
   }
 </style>
