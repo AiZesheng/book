@@ -45,4 +45,9 @@ class User_model extends CI_Model {
 		$rs = $this->db->query($sql);
 		return $rs->result();
 	}
+	public function get_order_by_userid($user_id){
+		$sql = "select * from t_order,t_book where t_order.user_id='$user_id' and t_book.book_id=t_order.book_id";
+		$rs = $this->db->query($sql);
+		return $rs->result();
+	}
 }

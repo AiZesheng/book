@@ -30,7 +30,8 @@
         <div style="float: right;">
           <span>合计&nbsp;&nbsp;(不含运费)&nbsp;&nbsp;:&nbsp;&nbsp;</span>
           <span class="total">{{this.$store.state.total | toFixed}}</span>
-          <div id="pay">结&nbsp;算</div>
+          <div id="pay" v-if="this.$store.state.total > 0" class="active" @click="pay">结&nbsp;算</div>
+          <div id="pay" v-else>结&nbsp;算</div>
         </div>
       </div>
     </div>
@@ -82,6 +83,10 @@
           }
           this.$store.state.total = 0;
         }
+      },
+      pay(){
+        alert("购买成功");
+        this.$router.push("/order");
       }
     },
     components: {
@@ -272,6 +277,9 @@
     color: #fff;
     font-size: 20px;
     margin-left: 10px;
+  }
+  #shopping .pay .active{
+    background: #f40;
     cursor: pointer;
   }
 </style>

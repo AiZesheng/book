@@ -19,9 +19,6 @@
         </div>
         <div class="row">
           <span class="key" style="float: left;line-height: 30px;">分类</span>
-          <!-- <div class="left"><i class="fa fa-angle-left"></i></div>
-          <input type="text" class="num" value="0">
-          <div class="right"><i class="fa fa-angle-right"></i></div> -->
           <span class="book-type">{{book.book_type}}</span>
           <span class="stock">库存{{book.book_stock}}</span>
         </div>

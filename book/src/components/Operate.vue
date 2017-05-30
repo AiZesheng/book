@@ -10,10 +10,10 @@
       <li class="price">￥{{books.book_price}}</li>
       <li>
         <a href="javascript:;" class="sup" @click="sup">-</a>
-        <input type="text" class="num" v-model="bookNum">
+        <input type="text" class="num" v-model="bookNum" @keyup="changePrice">
         <a href="javascript:;" class="add" @click="add">+</a>
       </li>
-      <li class="total-price">￥{{price}}</li>
+      <li class="total-price">￥{{price | toFixed}}</li>
       <li class="delete"><a href="javascript:;">删除</a></li>
     </ul>
   </div>
@@ -32,6 +32,14 @@
         isChecked: false
       };
     },
+    created(){
+      this.price = parseFloat(this.price);
+    },
+    filters: {
+      toFixed: function (value) {  
+        return value.toFixed(2);
+      }
+    },
     methods: {
       ...mapMutations([
         "addPrice",
@@ -41,31 +49,30 @@
       sup(){
         if(this.bookNum > 1){
           this.bookNum--;
+          this.books.book_price = parseFloat(this.books.book_price);
           this.price = this.bookNum * this.books.book_price;
-          this.price = this.price.toFixed(2);
           if(this.isChecked){
-            let p = parseFloat(this.books.book_price);
-            this.supPrice(p);
+            this.supPrice(this.books.book_price);
           }
         }
       },
       add(){
         this.bookNum++;
+        this.books.book_price = parseFloat(this.books.book_price);
         this.price = this.bookNum * this.books.book_price;
-        this.price = this.price.toFixed(2);
         if(this.isChecked){
-          let p = parseFloat(this.books.book_price);
-          this.addPrice(p);
+          this.addPrice(this.books.book_price);
         }
       },
       checked(){
         if(this.isChecked){
-          let p = parseFloat(this.price);
-          this.addPrice(p);
+          this.addPrice(this.price);
         }else{
-          let p = parseFloat(this.price);
-          this.supPrice(p);
+          this.supPrice(this.price);
         }
+      },
+      changePrice(){
+        this.price = this.bookNum * this.books.book_price;
       }
     },
     mounted(){

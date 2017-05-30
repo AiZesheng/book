@@ -1,7 +1,7 @@
 <template>
   <div id="loginSuccess">
-    <span class="login_user">当前用户: &nbsp;{{$store.state.loginUser.nickname}}</span>
-    <span class="shopping-cal"><router-link to="/shoppingcar">我的购物车</router-link></span>
+    <span class="login_user"><router-link to="/order">当前用户: &nbsp;{{$store.state.loginUser.nickname}}</router-link></span>
+    <span class="shopping-cal"><router-link :to='{name: "shoppingcar", params: {url: "http://localhost/book_php/user/get_shoppingcar"}}'>我的购物车</router-link></span>
     <span class="quit" @click="quit">退出</span>
   </div>
 </template>

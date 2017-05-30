@@ -115,4 +115,16 @@ class User extends CI_Controller {
 			echo $callback . '(0)';
 		}
 	}
+	public function get_order(){
+		$callback = $this->input->get("callback");
+		$user_id = $this->input->get("user_id");
+		$this->load->model("user_model");
+		$rs = $this->user_model->get_order_by_userid($user_id);
+		if($rs){
+			$json = json_encode($rs);
+			echo $callback . '(' . $json . ')';
+		}else{
+			echo $callback . '(0)';
+		}
+	}
 }
