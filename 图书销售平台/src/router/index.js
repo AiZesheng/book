@@ -7,6 +7,7 @@ import BookMes from '@/components/BookMes.vue';
 import ShoppingCar from '@/components/ShoppingCar.vue';
 import Buy from '@/components/Buy.vue';
 import Order from '@/components/Order.vue';
+import SearchResult from '@/components/SearchResult.vue';
 
 Vue.use(Router);
 
@@ -50,6 +51,11 @@ let router = new Router({
       name: "Order",
       path: "/order",
       component: Order
+    },
+    {
+      name: "SearchResult",
+      path: "/search/:keywords",
+      component: SearchResult
     }
   ]
 });

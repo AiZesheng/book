@@ -53,6 +53,7 @@
       }
     },
     mounted(){
+      this.$store.state.total = 0;
       let userId = this.$store.state.loginUser.user_id;
       this.$http.jsonp(this.$route.params.url, {
         params: {
@@ -85,8 +86,28 @@
         }
       },
       pay(){
-        alert("购买成功");
-        this.$router.push("/order");
+        let child = this.$refs.child;
+        let userId = this.$store.state.loginUser.user_id;
+        // 把购买的商品添加到数据库
+        for(let i=0; i<child.length; i++){
+          this.$http.jsonp("http://localhost/book_php/user/add_to_order", {
+            params: {
+              user_id: userId,
+              order_total_price: child[i].price,
+              book_num: child[i].bookNum,
+              book_id: this.books[i].book_id
+            }
+          }, {
+            jsonp: "callback"
+          }).then((res) => {
+            if(res.data){
+              // 跳转到订单页
+              this.$router.push("/order");
+            }else{
+              alert("购买失败");
+            }
+          });
+        }
       }
     },
     components: {

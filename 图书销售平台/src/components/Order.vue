@@ -1,7 +1,7 @@
 <template>
 	<div id="order">
 		<div class="wrapper">
-			<div class="title">已买到的书籍(0)</div>
+			<div class="title">已买到的书籍({{orderNum}})</div>
 			<table>
         <tr class="thead">
           <td width="8%">书籍图片</td>
@@ -29,7 +29,8 @@
 	export default{
     data(){
       return {
-        order: ""
+        order: "",
+        orderNum: ""
       };
     },
     mounted(){
@@ -41,6 +42,7 @@
         jsonp: "callback"
       }).then((res) => {
         this.order = res.data;
+        this.orderNum = res.data.length;
       });
     }
 	}

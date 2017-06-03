@@ -50,4 +50,18 @@ class User_model extends CI_Model {
 		$rs = $this->db->query($sql);
 		return $rs->result();
 	}
+	public function add_to_order($arr){
+		$rs = $this->db->insert("t_order",$arr);
+		return $rs;
+	}
+	public function delete_in_shoppingcar($user_id, $book_id){
+		$sql = "delete from t_shoppingcar where user_id='$user_id' and book_id='$book_id'";
+		$rs = $this->db->query($sql);
+		return $rs;
+	}
+	public function search($keywords){
+		$sql = "select * from t_book where book_name like '%$keywords%' or book_type like '%$keywords%'";
+		$rs = $this->db->query($sql);
+		return $rs->result();
+	}
 }

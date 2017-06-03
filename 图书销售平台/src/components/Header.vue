@@ -3,8 +3,8 @@
     <div class="wrapper">
       <router-link to="/index"><div class="logo">学府书城</div></router-link>
       <div class="search">
-        <input type="text" placeholder="请输入书籍信息">
-        <i class="fa fa-search"></i>
+        <input type="text" placeholder="请输入书籍信息" v-model="keywords" @keyup.enter="search">
+        <i class="fa fa-search" @click="search"></i>
       </div>
       <!-- 当有用户登录时显示 -->
       <div v-if="$store.state.loginUser">
@@ -23,12 +23,22 @@
   export default{
     data(){
       return {
-        loginUser: ""
+        loginUser: "",
+        keywords: ""
       };
     },
     components: {
       "v-nav": Nav,
       "v-loginSuccess": LoginSuccess
+    },
+    methods: {
+      search(){
+        if(!this.keywords){
+          alert("请输入关键字");
+        }else{
+          this.$router.push({ name: 'SearchResult', params: { keywords: this.keywords }});
+        }
+      }
     }
   }
 </script>

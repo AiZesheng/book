@@ -14,7 +14,7 @@
         <a href="javascript:;" class="add" @click="add">+</a>
       </li>
       <li class="total-price">￥{{price | toFixed}}</li>
-      <li class="delete"><a href="javascript:;">删除</a></li>
+      <li class="delete" @click="deleteBook"><a href="javascript:;">删除</a></li>
     </ul>
   </div>
 </template>
@@ -71,6 +71,22 @@
           this.supPrice(this.price);
         }
       },
+      deleteBook(){
+        this.$http.jsonp("http://localhost/book_php/user/delete_in_shoppingcar", {
+          params: {
+            user_id: this.$store.state.loginUser.user_id,
+            book_id: this.books.book_id
+          }
+        }, {
+          jsonp: "callback"
+        }).then((res) => {
+          if(res.data){
+            console.log(res.data);
+          }else{
+            alert("error");
+          }
+        });
+      },
       changePrice(){
         this.price = this.bookNum * this.books.book_price;
       }
@@ -85,7 +101,7 @@
         this.$on('noChecked', function () {
           this.isChecked = false;
         });
-      })
+      });
     }
   }
 </script>

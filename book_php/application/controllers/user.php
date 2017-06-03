@@ -127,4 +127,40 @@ class User extends CI_Controller {
 			echo $callback . '(0)';
 		}
 	}
+	public function add_to_order(){
+		$callback = $this->input->get("callback");
+		$user_id = $this->input->get("user_id");
+		$book_id = $this->input->get("book_id");
+		$order_total_price = $this->input->get("order_total_price");
+		$book_num = $this->input->get("book_num");
+		$this->load->model("user_model");
+		$arr = array(
+			"user_id" => $user_id,
+			"book_id" => $book_id,
+			"order_total_price" => $order_total_price,
+			"book_num" => $book_num
+		);
+		$rs = $this->user_model->add_to_order($arr);
+		echo $callback . '(' . $rs . ')';
+	}
+	public function delete_in_shoppingcar(){
+		$callback = $this->input->get("callback");
+		$user_id = $this->input->get("user_id");
+		$book_id = $this->input->get("book_id");
+		$this->load->model("user_model");
+		$rs = $this->user_model->delete_in_shoppingcar($user_id, $book_id);
+		echo $callback . '(' . $rs . ')';
+	}
+	public function search(){
+		$callback = $this->input->get("callback");
+		$keywords = $this->input->get("keywords");
+		$this->load->model("user_model");
+		$rs = $this->user_model->search($keywords);
+		if($rs){
+			$json = json_encode($rs);
+			echo $callback . '(' . $json . ')';
+		}else{
+			echo $callback . '(0)';
+		}
+	}
 }
