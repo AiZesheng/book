@@ -81,7 +81,7 @@
           jsonp: "callback"
         }).then((res) => {
           if(res.data){
-            console.log(res.data);
+            window.location.reload(); 
           }else{
             alert("error");
           }

@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <div class="wrapper">
-      <router-link to="/index"><div class="logo">学府书城</div></router-link>
+      <router-link to="/index" class="index"><div class="logo">书城首页</div></router-link>
       <div class="search">
         <input type="text" placeholder="请输入书籍信息" v-model="keywords" @keyup.enter="search">
         <i class="fa fa-search" @click="search"></i>
@@ -97,5 +97,9 @@
 
   #header .fa-search:hover {
     background: rgba(0, 0, 0, 1);
+  }
+
+  #header .index:hover{
+    color: #f40;
   }
 </style>

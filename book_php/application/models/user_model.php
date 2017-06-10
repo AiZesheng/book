@@ -64,4 +64,28 @@ class User_model extends CI_Model {
 		$rs = $this->db->query($sql);
 		return $rs->result();
 	}
+	public function login_admin($username, $password){
+		$sql = "select * from t_manager where manager_username='$username' and manager_password='$password'";
+		$rs = $this->db->query($sql);
+		return $rs->row();
+	}
+	public function get_all_users(){
+		$sql = "select * from t_user";
+		$rs = $this->db->query($sql);
+		return $rs->result();
+	}
+	public function get_all_order(){
+		$sql = "select * from t_order,t_user,t_book where t_order.user_id=t_user.user_id and t_order.book_id=t_book.book_id";
+		$rs = $this->db->query($sql);
+		return $rs->result();
+	}
+	public function add_book($arr){
+		$rs = $this->db->insert('t_book', $arr);
+		return $rs;
+	}
+	public function delete_book($book_id){
+		$sql = "delete from t_book where book_id='$book_id'";
+		$rs = $this->db->query($sql);
+		return $rs;
+	}
 }

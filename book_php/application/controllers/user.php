@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
+	// 以下function为前端接口部分
 	public function regist()
 	{
 		$callback = $this->input->get("callback");
@@ -161,6 +162,86 @@ class User extends CI_Controller {
 			echo $callback . '(' . $json . ')';
 		}else{
 			echo $callback . '(0)';
+		}
+	}
+	public function go_login(){
+		$this->load->view("login");
+	}
+	// 以下function为后台管理系统部分
+	public function do_login(){
+		$username = $this->input->post("username");
+		$password = $this->input->post("password");
+		$this->load->model("user_model");
+		$rs = $this->user_model->login_admin($username, $password);
+		if($rs){
+			redirect("user/books");
+		}else{
+			redirect("user/go_login");
+		}
+	}
+	public function books(){
+		$this->load->model("user_model");
+		$rs = $this->user_model->get_all();
+		$arr = array(
+			"books" => $rs
+		);
+		$this->load->view("books", $arr);
+	}
+	public function users(){
+		$this->load->model("user_model");
+		$rs = $this->user_model->get_all_users();
+		$arr = array(
+			"users" => $rs
+		);
+		$this->load->view("users", $arr);
+	}
+	public function order(){
+		$this->load->model("user_model");
+		$rs = $this->user_model->get_all_order();
+		$arr = array(
+			"order" => $rs
+		);
+		$this->load->view("order", $arr);
+	}
+	public function add_book(){
+		$config['upload_path'] = './img/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $this->load->library('upload', $config);
+        $result = $this->upload->do_upload('book_img');
+        //打印成功或错误的信息
+        if($result)
+        {
+			$book_name = $this->input->post("book_name");           
+			$book_price = $this->input->post("book_price");           
+			$book_type = $this->input->post("book_type");   
+			$data = $this->upload->data();        
+			$name = $data['file_name'];
+			$str = "http://localhost/book_php/img/$name";
+			$arr = array(
+				"book_name" => $book_name,
+				"book_price" => $book_price,
+				"book_type" => $book_type,
+				"book_img" => $str
+			);
+			$this->load->model("user_model");
+			$rs = $this->user_model->add_book($arr);
+			if($rs){
+				redirect("user/books");
+			}
+        }
+        else
+        {
+            $error = array("error" => $this->upload->display_errors());
+            var_dump($error);
+        }
+
+	}
+	public function delete_book(){
+		$book_id = $this->input->get("book_id");
+		$this->load->model("user_model");
+		$rs = $this->user_model->delete_book($book_id);
+		if($rs){
+			redirect("/user/books");
 		}
 	}
 }

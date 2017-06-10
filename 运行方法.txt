@@ -1,3 +1,3 @@
-﻿1. book_php 和 bbb文件夹放在htdocs下  把php运行环境和mysql打开
+1. book_php件夹放在htdocs下  把php运行环境和mysql打开
 2. 把book.sql导入到navicat
 3. book文件夹随变放一个位置 cd到"图书销售平台"文件夹 敲 npm run dev(电脑必须安装过nodejs) 如果报错就 敲npm install vue-resource 然后在敲 npm run dev
