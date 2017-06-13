@@ -76,7 +76,7 @@
                 <li><a href="user/users"><span class="am-icon-home"></span> 会员管理</a></li>
                 <li><a href="user/order"><span class="am-icon-home"></span> 订单管理</a></li>
                 <li><a href="javascript:;"><span class="am-icon-home"></span> 标注热卖</a></li>
-                <li><a href="javascript:;"><span class="am-icon-home"></span> 注销</a></li>
+                <li><a href="user/go_login"><span class="am-icon-home"></span> 注销</a></li>
             </ul>
 
             <div class="am-panel am-panel-default admin-sidebar-panel">
