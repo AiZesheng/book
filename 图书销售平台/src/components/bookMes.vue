@@ -124,7 +124,7 @@
     },
     mounted(){
       let path = this.$route.path;
-      let bookId = path.charAt(path.length - 1);  //通过url 接到book_id
+      let bookId = this.$route.params.bookId;  //接到book_id
       this.$http.jsonp('http://localhost/book_php/user/get_by_bookid', {
         params: {
           book_id: bookId
